@@ -1,0 +1,24 @@
+# Code::Blocks project/workspace files (do not commit IDE config)
+*.cbp
+*.workspace
+*.layout
+*.depend
+
+# Build directories (any depth)
+**/bin/
+**/obj/
+
+# Compiled binaries and intermediates
+*.exe
+*.dll
+*.lib
+*.a
+*.o
+*.obj
+*.pdb
+*.ilk
+*.manifest
+
+# OS/editor noise
+Thumbs.db
+.DS_Store
