@@ -255,3 +255,93 @@ void drawEdge(float* mainBlade1, float* mainBlade2, float* mainBlade3, float* ma
 
     setGlow(false); // Disable glow
 }
+
+// Helper to draw the Stock with a rounded back end
+void drawRoundedStock(float* p1, float* p2, float* p3, float* p4, float thickness) {
+    // p1: Top Left, p2: Bottom Left, p3: Bottom Right, p4: Top Right
+    // We assume p1-p4 is the top edge, p2-p3 is the bottom edge.
+    // We will round the side connecting p3 and p4.
+
+    float halfThick = thickness / 2.0f;
+    int segments = 20; // More segments = smoother curve
+
+    // 1. Draw the Main Rectangular Body (Left side)
+    // We stop x slightly before the end to leave room for the circle cap
+    // Let's assume the curve starts where p3 and p4 x-coordinates are.
+
+    // Find center point between p3 and p4
+    float centerX = p3[0]; // Assuming p3 and p4 have aligned X
+    float centerY = (p3[1] + p4[1]) / 2.0f;
+    float centerZ = p3[2];
+
+    float height = p4[1] - p3[1];
+    float radius = height / 2.0f;
+
+    // --- DRAW FLAT SIDES (Front and Back Faces) ---
+    for (int face = 0; face < 2; face++) {
+        float z = (face == 0) ? centerZ + halfThick : centerZ - halfThick;
+
+        glBegin(GL_POLYGON);
+        if(face == 0) glNormal3f(0, 0, 1); else glNormal3f(0, 0, -1);
+
+        // Rectangular part vertices
+        glVertex3f(p1[0], p1[1], z); // Top Left
+        glVertex3f(p2[0], p2[1], z); // Bottom Left
+
+        // Curved part vertices (Fan)
+        // Angle goes from -90 degrees (Bottom) to +90 degrees (Top)
+        for (int i = 0; i <= segments; i++) {
+            float angle = -M_PI / 2.0f + (M_PI * i / segments);
+            float x = centerX + cos(angle) * radius;
+            float y = centerY + sin(angle) * radius;
+            glVertex3f(x, y, z);
+        }
+
+        // Close shape back to top left if needed, but POLYGON handles it
+        glEnd();
+    }
+
+    // --- DRAW EDGES (Extrusion) ---
+    glBegin(GL_QUAD_STRIP);
+
+    // 1. Left Wall (p1 to p2)
+    glNormal3f(-1, 0, 0);
+    glVertex3f(p1[0], p1[1], centerZ + halfThick);
+    glVertex3f(p1[0], p1[1], centerZ - halfThick);
+    glVertex3f(p2[0], p2[1], centerZ + halfThick);
+    glVertex3f(p2[0], p2[1], centerZ - halfThick);
+    glEnd();
+
+    // 2. Top Wall (p1 to Top of Curve)
+    glBegin(GL_QUAD_STRIP);
+    glNormal3f(0, 1, 0);
+    glVertex3f(centerX, p1[1], centerZ + halfThick);
+    glVertex3f(centerX, p1[1], centerZ - halfThick);
+    glVertex3f(p1[0], p1[1], centerZ + halfThick);
+    glVertex3f(p1[0], p1[1], centerZ - halfThick);
+    glEnd();
+
+    // 3. Bottom Wall (p2 to Bottom of Curve)
+    glBegin(GL_QUAD_STRIP);
+    glNormal3f(0, -1, 0);
+    glVertex3f(p2[0], p2[1], centerZ + halfThick);
+    glVertex3f(p2[0], p2[1], centerZ - halfThick);
+    glVertex3f(centerX, p2[1], centerZ + halfThick);
+    glVertex3f(centerX, p2[1], centerZ - halfThick);
+    glEnd();
+
+    // 4. Curved Wall
+    glBegin(GL_QUAD_STRIP);
+    for (int i = 0; i <= segments; i++) {
+        float angle = -M_PI / 2.0f + (M_PI * i / segments);
+        float x = centerX + cos(angle) * radius;
+        float y = centerY + sin(angle) * radius;
+
+        // Normal points outward from center
+        glNormal3f(cos(angle), sin(angle), 0);
+
+        glVertex3f(x, y, centerZ + halfThick);
+        glVertex3f(x, y, centerZ - halfThick);
+    }
+    glEnd();
+}

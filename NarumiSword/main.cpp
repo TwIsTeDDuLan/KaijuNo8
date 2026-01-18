@@ -297,15 +297,16 @@ float gunTopHandleSpacer4[] = {gunBodyMain16[0] - gunTopHandleSpacer1Length,
 
 float gunTopHandle1[] = {gunTopHandleSpacer1[0],
                          gunTopHandleSpacer1[1] + gunTopHandleHeight,
-                         gunTopHandleSpacer1[2]}; // Top Right
-float gunTopHandle2[] = {gunTopHandleSpacer1[0], gunTopHandleSpacer1[1],
+                         gunTopHandleSpacer1[2]-0.05f}; // Top Right
+float gunTopHandle2[] = {gunTopHandleSpacer1[0],
+                         gunTopHandleSpacer1[1],
                          gunTopHandleSpacer1[2]}; // Bottom Right
 float gunTopHandle3[] = {gunBodyMain16[0] - gunTopHandleLength,
                          gunTopHandleSpacer1[1],
                          gunTopHandleSpacer1[2]}; // Bottom Left
 float gunTopHandle4[] = {gunBodyMain16[0] - gunTopHandleLength,
                          gunTopHandleSpacer1[1] + gunTopHandleHeight,
-                         gunTopHandleSpacer1[2]}; // Top Left
+                         gunTopHandleSpacer1[2]-0.05f}; // Top Left
 
 // --- 3. FRONT SPACER (Connector at the front) ---
 
@@ -362,28 +363,33 @@ float rearSpikeEdge3[] = {rearSpikeEnd[0], rearSpikeEnd[1] + rearEdgeLen,
 // --- Initialization ---
 // Sets up OpenGL state, lighting, and materials
 void init() {
-  glClearColor(0.6f, 0.6f, 0.6f, 0.0f); // Light grey background
-  glEnable(
-      GL_DEPTH_TEST); // Enable Z-buffer (so objects don't draw over each other)
-  glEnable(GL_COLOR_MATERIAL); // Allow glColor to affect material properties
-  glEnable(GL_NORMALIZE);      // Fix normal vectors after scaling
+    glClearColor(0.6f, 0.6f, 0.6f, 0.0f); // Light grey background
+    glEnable(GL_DEPTH_TEST); // Enable Z-buffer (so objects don't draw over each other)
+    glEnable(GL_COLOR_MATERIAL); // Allow glColor to affect material properties
+    glEnable(GL_NORMALIZE);      // Fix normal vectors after scaling
+    glEnable(GLUT_MULTISAMPLE);
+
+    glEnable(GL_LINE_SMOOTH);
+    glHint(GL_LINE_SMOOTH_HINT, GL_NICEST);
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
   // Enable Lighting
-  glEnable(GL_LIGHTING);
-  glEnable(GL_LIGHT0);
+    glEnable(GL_LIGHTING);
+    glEnable(GL_LIGHT0);
 
   // Light Properties
-  GLfloat whiteLight[] = {1.0f, 1.0f, 1.0f, 1.0f};
-  GLfloat ambientLight[] = {0.1f, 0.1f, 0.1f, 1.0f};
-  glLightfv(GL_LIGHT0, GL_DIFFUSE, whiteLight);
-  glLightfv(GL_LIGHT0, GL_SPECULAR, whiteLight);
-  glLightfv(GL_LIGHT0, GL_AMBIENT, ambientLight);
-  glLightfv(GL_LIGHT0, GL_POSITION, light_pos);
+    GLfloat whiteLight[] = {1.0f, 1.0f, 1.0f, 1.0f};
+    GLfloat ambientLight[] = {0.1f, 0.1f, 0.1f, 1.0f};
+    glLightfv(GL_LIGHT0, GL_DIFFUSE, whiteLight);
+    glLightfv(GL_LIGHT0, GL_SPECULAR, whiteLight);
+    glLightfv(GL_LIGHT0, GL_AMBIENT, ambientLight);
+    glLightfv(GL_LIGHT0, GL_POSITION, light_pos);
 
-  glClearColor(0.05f, 0.05f, 0.08f, 1.0f);
+    glClearColor(0.05f, 0.05f, 0.08f, 1.0f);
 
   // Initialize Electrons
-  initElectrons();
+    initElectrons();
 }
 
 // Animation functions moved to animations.cpp
@@ -528,7 +534,8 @@ void display() {
   drawPollygon(gunGrip2, gunGrip3, gunGrip4, gunGrip1, thick);
 
   // stock
-  drawPollygon(gunStock2, gunStock3, gunStock4, gunStock1, thick);
+  //drawPollygon(gunStock2, gunStock3, gunStock4, gunStock1, thick);
+  drawRoundedStock(gunStock1, gunStock2, gunStock3, gunStock4, thick);
 
   // Lower stock
   drawPollygon(gunLowStock2, gunLowStock3, gunLowStock4, gunLowStock1, thick);
@@ -749,9 +756,9 @@ void mouse(int button, int state, int x, int y) {
 // --- Entry Point ---
 int main(int argc, char **argv) {
   glutInit(&argc, argv);
-  glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
-  glutInitWindowSize(800, 600);
-  glutInitWindowPosition(100, 100);
+  glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH | GLUT_MULTISAMPLE);
+  glutInitWindowSize(1920, 1080);
+  glutInitWindowPosition(0, 0);
   glutCreateWindow("Narumi's Weapon");
 
   init(); // Initialize OpenGL settings
