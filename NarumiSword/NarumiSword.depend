@@ -1,0 +1,159 @@
+# depslib dependency file v1.0
+1764753230 source:e:\cs\sem 4\computer graphics\project\cg-projects-kijuwepon01\narumisword\main.cpp
+	<GL/glut.h>
+	<GL/glu.h>
+	<iostream>
+	<stdio.h>
+	<math.h>
+	<cstring>
+
+1426329928 c:\program files (x86)\codeblocks\mingw\include\gl\glut.h
+	"freeglut_std.h"
+
+1426329928 c:\program files (x86)\codeblocks\mingw\include\gl\freeglut_std.h
+	<windows.h>
+	<EGL/egl.h>
+	<GLES/gl.h>
+	<GLES2/gl2.h>
+	<OpenGL/gl.h>
+	<OpenGL/glu.h>
+	<GL/gl.h>
+	<GL/glu.h>
+	<stdlib.h>
+
+1764330639 source:e:\cs\sem 4\computer graphics\project\cg-projects-kijuwepon01\narumisword\test.cpp
+	<GL/glut.h>
+	<math.h>
+
+1764433200 source:e:\cs\sem 4\computer graphics\project\cg-projects-kijuwepon01\narumisword\testobjs.cpp
+	<GL/glut.h>
+	<math.h>
+
+1764737217 source:e:\cs\sem 4\computer graphics\project\cg-projects-kijuwepon01\narumisword\basci3dobjs.cpp
+	<GL/glut.h>
+	<GL/glu.h>
+	<iostream>
+	<stdio.h>
+	<math.h>
+	<cstring>
+
+1764486249 source:e:\cs\sem 4\computer graphics\project\cg-projects-kijuwepon01\narumisword\hello.cpp
+	<GL/glut.h>
+	<GL/glu.h>
+	<iostream>
+	<stdio.h>
+	<math.h>
+	<cstring>
+	<vector>
+
+1766508316 source:e:\cs\sem 4\computer graphics\project\group-15\narumisword\main.cpp
+	<GL/glut.h>
+	<GL/glu.h>
+	<iostream>
+	<stdio.h>
+	<math.h>
+	<cstring>
+	"Draw.h"
+	"utils.h"
+
+1766485895 e:\cs\sem 4\computer graphics\project\group-15\narumisword\draw.h
+	<GL/glut.h>
+	<GL/glu.h>
+	<iostream>
+	<stdio.h>
+	<math.h>
+	<cstring>
+
+1766500920 e:\cs\sem 4\computer graphics\project\group-15\narumisword\utils.h
+
+1767109364 source:e:\cs\sem 4\computer graphics\project\cg-projects-group_15\narumisword\main.cpp
+	<GL/glut.h>
+	<GL/glu.h>
+	<iostream>
+	<stdio.h>
+	<math.h>
+	<cstring>
+	"Draw.h"
+	"utils.h"
+
+1766604318 e:\cs\sem 4\computer graphics\project\cg-projects-group_15\narumisword\draw.h
+	<GL/glut.h>
+	<GL/glu.h>
+	<iostream>
+	<stdio.h>
+	<math.h>
+	<cstring>
+
+1766511560 e:\cs\sem 4\computer graphics\project\cg-projects-group_15\narumisword\utils.h
+
+1768380125 source:c:\users\sudasun\desktop\cg-projects-group_15\narumisword\main.cpp
+	<GL/glut.h>
+	<GL/glu.h>
+	<iostream>
+	<stdio.h>
+	<math.h>
+	<cstring>
+	"Draw.h"
+	"utils.h"
+
+1426327440 c:\program files\codeblocks\mingw\include\gl\glut.h
+	"freeglut_std.h"
+
+1437534942 c:\program files\codeblocks\mingw\include\gl\freeglut_std.h
+	<windows.h>
+	<EGL/egl.h>
+	<GLES/gl.h>
+	<GLES2/gl2.h>
+	<OpenGL/gl.h>
+	<OpenGL/glu.h>
+	<GL/gl.h>
+	<GL/glu.h>
+	<stdlib.h>
+
+1768380125 c:\users\sudasun\desktop\cg-projects-group_15\narumisword\draw.h
+	<GL/glut.h>
+	<GL/glu.h>
+	<iostream>
+	<stdio.h>
+	<math.h>
+	<cstring>
+
+1768380125 c:\users\sudasun\desktop\cg-projects-group_15\narumisword\utils.h
+
+1768753138 source:e:\cs\sem 4\computer graphics\project\kaijuno8\narumisword\main.cpp
+	"Draw.h"
+	"animations.h"
+	"utils.h"
+	<GL/glu.h>
+	<GL/glut.h>
+	<cstdlib>
+	<cstring>
+	<iostream>
+	<math.h>
+	<stdio.h>
+	<vector>
+
+1768753353 e:\cs\sem 4\computer graphics\project\kaijuno8\narumisword\draw.h
+	<GL/glu.h>
+	<GL/glut.h>
+	<cstring>
+	<iostream>
+	<math.h>
+	<stdio.h>
+
+1768635495 e:\cs\sem 4\computer graphics\project\kaijuno8\narumisword\animations.h
+	<GL/glu.h>
+	<GL/glut.h>
+	<cmath>
+	<cstdlib>
+	<vector>
+
+1768635495 e:\cs\sem 4\computer graphics\project\kaijuno8\narumisword\utils.h
+
+1768635495 source:e:\cs\sem 4\computer graphics\project\kaijuno8\narumisword\animations.cpp
+	"animations.h"
+	<iostream>
+	<cstdlib>
+	<math.h>
+	<vector>
+

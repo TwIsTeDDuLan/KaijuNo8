@@ -361,8 +361,7 @@ float rearSpikeEdge3[] = {rearSpikeEnd[0], rearSpikeEnd[1] + rearEdgeLen,
 void init() {
   glClearColor(0.25f, 0.25f, 0.30f,
                1.0f); // Dark blue-grey background for contrast
-  glEnable(
-      GL_DEPTH_TEST); // Enable Z-buffer (so objects don't draw over each other)
+  glEnable(GL_DEPTH_TEST); // Enable Z-buffer (so objects don't draw over each other)
   glEnable(GL_COLOR_MATERIAL); // Allow glColor to affect material properties
   glEnable(GL_NORMALIZE);      // Fix normal vectors after scaling
   glEnable(GLUT_MULTISAMPLE);
