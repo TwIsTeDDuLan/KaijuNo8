@@ -51,7 +51,7 @@ float barrelR = 0.01273f;
 
 // --- Gun Body Dimensions ---
 float gunBodyBarrelCoverThickness = 0.05f;
-float gunBodyMainLength1 = 0.5f;
+float gunBodyMainLength1 = 0.8f;
 float gunBodyMainLength2 = gunBodyMainLength1 + 0.5f;
 float gunBodyMainHeight = mainBladeHeight + 0.5f;
 float rearBladeLength = 2.0f;
@@ -207,14 +207,14 @@ float gunBodyBarrelCover8[] = {gunBodyBarrelCover4[0], gunBodyBarrelCover4[1],
 // 7. GUN BODY: MAIN SEGMENTS (Sequential Build)
 // ==========================================================================
 
-float gunBodyMainThickness = backCoverZ - frontCoverZ - 0.2f;
+float gunBodyMainThickness = backCoverZ - frontCoverZ;
 
 // --- Part One ---
 float gunBodyMain1[] = {gunBodyBarrelCover3[0], gunBodyBarrelCover3[1],
-                        gunBodyBarrelCover3[2]+0.1f};
+                        gunBodyBarrelCover3[2]};
 float gunBodyMain2[] = {gunBodyBarrelCover3[0],
                         gunBodyBarrelCover3[1] - gunBodyMainHeight,
-                        gunBodyBarrelCover3[2]+0.1f};
+                        gunBodyBarrelCover3[2]};
 float gunBodyMain3[] = {gunBodyMain2[0] + gunBodyMainLength2, gunBodyMain2[1],
                         gunBodyMain2[2]};
 float gunBodyMain4[] = {gunBodyMain1[0] + gunBodyMainLength1, gunBodyMain1[1],
