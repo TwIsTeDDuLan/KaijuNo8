@@ -18,12 +18,9 @@
 #include <GL/glut.h>
 #include <cstdlib>
 #include <cstring>
-#include <iostream>
 
 #define _USE_MATH_DEFINES
 #include <math.h>
-#include <stdio.h>
-#include <vector>
 
 using namespace std;
 
@@ -46,9 +43,9 @@ float zoom = 5.0f; // Camera distance (Zoom level)
 // --- Dimensions ---
 float bladeAndBarrelJointHeight = 0.3f;
 float bladeThickness = 0.2f;
-float edgeLen = 0.2f;
-float mainBladeLength = 5.5f;
-float mainBladeHeight = 0.5f;
+float edgeLen = 0.3f;
+float mainBladeLength = 4.5f;
+float mainBladeHeight = 0.3f;
 float barrelLength = mainBladeLength + 1.0f;
 float barrelR = 0.01273f;
 
@@ -57,10 +54,10 @@ float gunBodyBarrelCoverThickness = 0.05f;
 float gunBodyMainLength1 = 0.5f;
 float gunBodyMainLength2 = gunBodyMainLength1 + 0.5f;
 float gunBodyMainHeight = mainBladeHeight + 0.5f;
-float rearBladeLength = 1.8f;
+float rearBladeLength = 2.0f;
 float rearBladeZ = 0.1f;
-float rearBladeHeight = 0.5;
-float rearEdgeLen = 0.1f;
+float rearBladeHeight = -0.2f;
+float rearEdgeLen = 0.2f;
 
 float gunBodyHandleLength = 2.0f;
 float gunBodyHandleHeight = 0.2f;
@@ -69,17 +66,16 @@ float gunTopHandleLength = 5.0f;
 float gunTopHandleSpacer1Length = 1.5f;
 float gunTopHandleSpacer2Length = 0.2f;
 float gunTopHandleSpacerHeight = 0.2f;
-float gunGripHeight1 = 0.6f;
+float gunGripHeight1 = 0.4f;
 float gunGripLen = 1.0f;
-float gunStock1Height = 0.5f;
+float gunStock1Height = 0.4f;
 float gunStock2Height = 0.5f;
 float gunStockLen1 = 2.0f;
 float gunStockLen2 = gunStockLen1 - gunGripLen;
 
 // --- Colors ---
-GLfloat colorGunMetal[] = {0.2f, 0.2f, 0.2f, 1.0f}; // Dark Grey
-GLfloat colorGunBody[] = {0.1f, 0.1f, 0.1f, 1.0f};
-GLfloat colorGunBarrel[] = {0.3f, 0.3f, 0.35f, 1.0f}; // Almost Black
+// --- Colors ---
+// Colors are now defined in Draw.h
 
 // --- Lighting & Position ---
 GLfloat light_pos[] = {4.0f, 10.0f, 10.0f, 1.0f};
@@ -159,9 +155,9 @@ float mainBlade7[] = {mainBladeJointAndTriangularStart +
 // ==========================================================================
 
 // Top Edge
-float mainBladeEdgeLeft1[] = {mainBlade1[0] - edgeLen, mainBlade1[1],
+float mainBladeEdgeLeft1[] = {mainBlade1[0] - edgeLen - 0.2f, mainBlade1[1],
                               bladeZ - bladeThickness / 2};
-float mainBladeEdgeLeft2[] = {mainBlade4[0] - edgeLen, mainBlade4[1],
+float mainBladeEdgeLeft2[] = {mainBlade4[0] - edgeLen - 0.2f, mainBlade4[1],
                               bladeZ - bladeThickness / 2};
 
 // Bottom Edge Path
@@ -189,9 +185,9 @@ float backCoverZ = -gunBodyBaseZ;
 float gunBodyTopY = mainBladeBodyTopY + barrelR * 2 + 0.5f;
 
 // --- Front Cover ---
-float gunBodyBarrelCover1[] = {mainBladeJointTwo1[0] - 0.5f, gunBodyTopY,
+float gunBodyBarrelCover1[] = {mainBladeJointTwo1[0] + 0.2f, gunBodyTopY,
                                frontCoverZ};
-float gunBodyBarrelCover2[] = {mainBladeJointTwo1[0],
+float gunBodyBarrelCover2[] = {mainBladeJointTwo1[0] + 0.7f,
                                jointTopY - bladeAndBarrelJointHeight / 2,
                                frontCoverZ};
 float gunBodyBarrelCover3[] = {gunBodyMag, gunBodyBarrelCover2[1], frontCoverZ};
@@ -295,18 +291,17 @@ float gunTopHandleSpacer4[] = {gunBodyMain16[0] - gunTopHandleSpacer1Length,
 
 // --- 2. TOP HANDLE BAR ---
 
-float gunTopHandle1[] = {gunTopHandleSpacer1[0],
+float gunTopHandle1[] = {gunTopHandleSpacer1[0] - 0.1f,
                          gunTopHandleSpacer1[1] + gunTopHandleHeight,
-                         gunTopHandleSpacer1[2]-0.05f}; // Top Right
-float gunTopHandle2[] = {gunTopHandleSpacer1[0],
-                         gunTopHandleSpacer1[1],
+                         gunTopHandleSpacer1[2] - 0.05f}; // Top Right
+float gunTopHandle2[] = {gunTopHandleSpacer1[0], gunTopHandleSpacer1[1],
                          gunTopHandleSpacer1[2]}; // Bottom Right
 float gunTopHandle3[] = {gunBodyMain16[0] - gunTopHandleLength,
                          gunTopHandleSpacer1[1],
                          gunTopHandleSpacer1[2]}; // Bottom Left
-float gunTopHandle4[] = {gunBodyMain16[0] - gunTopHandleLength,
+float gunTopHandle4[] = {gunBodyMain16[0] - gunTopHandleLength + 0.1f,
                          gunTopHandleSpacer1[1] + gunTopHandleHeight,
-                         gunTopHandleSpacer1[2]-0.05f}; // Top Left
+                         gunTopHandleSpacer1[2] - 0.05f}; // Top Left
 
 // --- 3. FRONT SPACER (Connector at the front) ---
 
@@ -328,12 +323,13 @@ float gunTopHandleSpacer8[] = {gunTopHandle3[0] + gunTopHandleSpacer2Length,
 // --- 1. Rear Blade Body ---
 // Starts at the back of the stock (gunStock4/3) and goes UP/RIGHT
 // Connection points (Base)
-float rearBlade1[] = {gunStock4[0], gunStock4[1], rearBladeZ}; // Top Left
+float rearBlade1[] = {gunStock4[0], gunStock4[1] + rearBladeHeight,
+                      rearBladeZ};                             // Top Left
 float rearBlade2[] = {gunStock3[0], gunStock3[1], rearBladeZ}; // Bottom Left
 float rearBlade3[] = {gunStock3[0] + rearBladeLength + 0.5f, gunStock3[1],
                       rearBladeZ}; // Bottom right
-float rearBlade4[] = {gunStock4[0] + rearBladeLength, gunStock4[1],
-                      rearBladeZ}; // Top Right
+float rearBlade4[] = {gunStock4[0] + rearBladeLength,
+                      gunStock4[1] + rearBladeHeight, rearBladeZ}; // Top Right
 
 // --- 2. Rear Triangular Spike (Glowing Part) ---
 // Similar logic to the front blade's spike, but inverted direction
@@ -347,9 +343,9 @@ float rearSpikeTip[] = {rearBlade1[0] + 0.9f, rearBlade1[1] + 0.3f,
 // Edge for the main top slope
 float rearEdge1[] = {rearBlade1[0], rearBlade1[1] + rearEdgeLen,
                      bladeZ - bladeThickness / 2}; // Tip Top Inner
-float rearEdge2[] = {rearBlade3[0] + rearEdgeLen + 0.05f, rearBlade3[1],
+float rearEdge2[] = {rearBlade3[0] + rearEdgeLen + 0.3f, rearBlade3[1],
                      bladeZ - bladeThickness / 2}; // Base Top Inner
-float rearEdge3[] = {rearBlade4[0] + rearEdgeLen + 0.05f, rearBlade4[1],
+float rearEdge3[] = {rearBlade4[0] + rearEdgeLen + 0.3f, rearBlade4[1],
                      bladeZ - bladeThickness / 2};
 
 // Edge for the Triangle Spike
@@ -363,33 +359,33 @@ float rearSpikeEdge3[] = {rearSpikeEnd[0], rearSpikeEnd[1] + rearEdgeLen,
 // --- Initialization ---
 // Sets up OpenGL state, lighting, and materials
 void init() {
-    glClearColor(0.6f, 0.6f, 0.6f, 0.0f); // Light grey background
-    glEnable(GL_DEPTH_TEST); // Enable Z-buffer (so objects don't draw over each other)
-    glEnable(GL_COLOR_MATERIAL); // Allow glColor to affect material properties
-    glEnable(GL_NORMALIZE);      // Fix normal vectors after scaling
-    glEnable(GLUT_MULTISAMPLE);
+  glClearColor(0.25f, 0.25f, 0.30f,
+               1.0f); // Dark blue-grey background for contrast
+  glEnable(
+      GL_DEPTH_TEST); // Enable Z-buffer (so objects don't draw over each other)
+  glEnable(GL_COLOR_MATERIAL); // Allow glColor to affect material properties
+  glEnable(GL_NORMALIZE);      // Fix normal vectors after scaling
+  glEnable(GLUT_MULTISAMPLE);
 
-    glEnable(GL_LINE_SMOOTH);
-    glHint(GL_LINE_SMOOTH_HINT, GL_NICEST);
-    glEnable(GL_BLEND);
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+  glEnable(GL_LINE_SMOOTH);
+  glHint(GL_LINE_SMOOTH_HINT, GL_NICEST);
+  glEnable(GL_BLEND);
+  glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
   // Enable Lighting
-    glEnable(GL_LIGHTING);
-    glEnable(GL_LIGHT0);
+  glEnable(GL_LIGHTING);
+  glEnable(GL_LIGHT0);
 
   // Light Properties
-    GLfloat whiteLight[] = {1.0f, 1.0f, 1.0f, 1.0f};
-    GLfloat ambientLight[] = {0.1f, 0.1f, 0.1f, 1.0f};
-    glLightfv(GL_LIGHT0, GL_DIFFUSE, whiteLight);
-    glLightfv(GL_LIGHT0, GL_SPECULAR, whiteLight);
-    glLightfv(GL_LIGHT0, GL_AMBIENT, ambientLight);
-    glLightfv(GL_LIGHT0, GL_POSITION, light_pos);
-
-    glClearColor(0.05f, 0.05f, 0.08f, 1.0f);
+  GLfloat whiteLight[] = {1.0f, 1.0f, 1.0f, 1.0f};
+  GLfloat ambientLight[] = {0.1f, 0.1f, 0.1f, 1.0f};
+  glLightfv(GL_LIGHT0, GL_DIFFUSE, whiteLight);
+  glLightfv(GL_LIGHT0, GL_SPECULAR, whiteLight);
+  glLightfv(GL_LIGHT0, GL_AMBIENT, ambientLight);
+  glLightfv(GL_LIGHT0, GL_POSITION, light_pos);
 
   // Initialize Electrons
-    initElectrons();
+  initElectrons();
 }
 
 // Animation functions moved to animations.cpp
@@ -413,7 +409,7 @@ void display() {
 
   // Main Body
   glPushMatrix();
-  glColor3fv(colorGunBody);
+  glColor3fv(colorSilver);
   drawPollygon(mainBlade1, mainBlade2, mainBlade3, mainBlade4, bladeThickness);
   glPopMatrix();
 
@@ -469,7 +465,7 @@ void display() {
   setGlow(false);
 
   // --- 3. Draw Barrel ---
-  glColor3fv(colorGunBody);
+  glColor3fv(colorBarrel);
   glPushMatrix();
   glTranslatef(barrel[0], barrel[1], barrel[2]);
   glRotatef(270, 0, 1, 0); // Rotate to point along X-axis
@@ -505,7 +501,7 @@ void display() {
   top8[2] -= gunBodyBarrelCoverThickness - 0.001f;
 
   // create gun body barrel cover
-  glColor3fv(colorGunBarrel);
+  glColor3fv(colorGunMetal);
   glPushMatrix();
   drawPollygon(gunBodyBarrelCover1, gunBodyBarrelCover2, gunBodyBarrelCover3,
                gunBodyBarrelCover4, +gunBodyBarrelCoverThickness);
@@ -531,18 +527,21 @@ void display() {
                thick);
 
   // grip
+  glColor3fv(colorGrip);
   drawPollygon(gunGrip2, gunGrip3, gunGrip4, gunGrip1, thick);
 
   // stock
-  //drawPollygon(gunStock2, gunStock3, gunStock4, gunStock1, thick);
-  drawRoundedStock(gunStock1, gunStock2, gunStock3, gunStock4, thick);
+  glColor3fv(colorGunMetal);
+  drawPollygon(gunStock2, gunStock3, gunStock4, gunStock1, thick);
+  // drawRoundedStock(gunStock1, gunStock2, gunStock3, gunStock4, thick);
 
   // Lower stock
   drawPollygon(gunLowStock2, gunLowStock3, gunLowStock4, gunLowStock1, thick);
 
   // Handle Assembly
-  drawPollygon(gunTopHandle3, gunTopHandle2, gunTopHandle1, gunTopHandle4,
-               thick);
+  glColor3fv(colorGrip);
+  drawPollygon(gunTopHandle3, thick, gunTopHandle2, thick, gunTopHandle1,
+               thick - 0.1f, gunTopHandle4, thick - 0.1f, thick);
 
   // Spacers
   drawPollygon(gunTopHandleSpacer3, gunTopHandleSpacer2, gunTopHandleSpacer1,
@@ -555,7 +554,7 @@ void display() {
   // --- REAR BLADE ---
   // 1. Blade Body (Metallic)
   glPushMatrix();
-  glColor3fv(colorGunBody);
+  glColor3fv(colorSilver);
   // Draw rectangularish body: BL -> BR -> TR -> TL
   // Logic: BaseBottom -> TipBottom -> TipTop -> BaseTop
   drawPollygon(rearBlade2, rearBlade3, rearBlade4, rearBlade1, bladeThickness);
