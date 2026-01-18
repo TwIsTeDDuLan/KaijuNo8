@@ -207,14 +207,14 @@ float gunBodyBarrelCover8[] = {gunBodyBarrelCover4[0], gunBodyBarrelCover4[1],
 // 7. GUN BODY: MAIN SEGMENTS (Sequential Build)
 // ==========================================================================
 
-float gunBodyMainThickness = backCoverZ - frontCoverZ;
+float gunBodyMainThickness = backCoverZ - frontCoverZ - 0.2f;
 
 // --- Part One ---
 float gunBodyMain1[] = {gunBodyBarrelCover3[0], gunBodyBarrelCover3[1],
-                        gunBodyBarrelCover3[2]};
+                        gunBodyBarrelCover3[2]+0.1f};
 float gunBodyMain2[] = {gunBodyBarrelCover3[0],
                         gunBodyBarrelCover3[1] - gunBodyMainHeight,
-                        gunBodyBarrelCover3[2]};
+                        gunBodyBarrelCover3[2]+0.1f};
 float gunBodyMain3[] = {gunBodyMain2[0] + gunBodyMainLength2, gunBodyMain2[1],
                         gunBodyMain2[2]};
 float gunBodyMain4[] = {gunBodyMain1[0] + gunBodyMainLength1, gunBodyMain1[1],
