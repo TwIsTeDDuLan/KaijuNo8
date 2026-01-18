@@ -44,8 +44,8 @@ float zoom = 5.0f; // Camera distance (Zoom level)
 float bladeAndBarrelJointHeight = 0.3f;
 float bladeThickness = 0.2f;
 float edgeLen = 0.3f;
-float mainBladeLength = 4.5f;
-float mainBladeHeight = 0.3f;
+float mainBladeLength = 5.5f;
+float mainBladeHeight = 0.5f;
 float barrelLength = mainBladeLength + 1.0f;
 float barrelR = 0.01273f;
 
@@ -56,7 +56,7 @@ float gunBodyMainLength2 = gunBodyMainLength1 + 0.5f;
 float gunBodyMainHeight = mainBladeHeight + 0.5f;
 float rearBladeLength = 2.0f;
 float rearBladeZ = 0.1f;
-float rearBladeHeight = -0.2f;
+float rearBladeHeight = -0.1f;
 float rearEdgeLen = 0.2f;
 
 float gunBodyHandleLength = 2.0f;
@@ -213,7 +213,7 @@ float gunBodyMainThickness = backCoverZ - frontCoverZ;
 float gunBodyMain1[] = {gunBodyBarrelCover3[0], gunBodyBarrelCover3[1],
                         gunBodyBarrelCover3[2]};
 float gunBodyMain2[] = {gunBodyBarrelCover3[0],
-                        gunBodyBarrelCover3[1] - gunBodyMainHeight,
+                        gunBodyBarrelCover3[1] - gunBodyMainHeight + 0.4f,
                         gunBodyBarrelCover3[2]};
 float gunBodyMain3[] = {gunBodyMain2[0] + gunBodyMainLength2, gunBodyMain2[1],
                         gunBodyMain2[2]};
@@ -247,7 +247,26 @@ float gunBodyMain16[] = {gunBodyMain12[0], gunBodyBarrelCover4[1],
                          gunBodyMain9[2]};
 
 // ==========================================================================
-// 8. GUN BODY: stock
+// 8. GUN BODY: MAGZINE (Added)
+// ==========================================================================
+// Connects to the bottom of Part One (gunBodyMain2 to gunBodyMain3)
+// Length is 6/8 of that segment.
+float gunMagazineHeight = 0.4f;
+float gunMagazineLen = gunBodyMainLength2 * 0.75f;     // 6/8
+float gunMagazineOffset = gunBodyMainLength2 * 0.125f; // Center it (1/8 offset)
+
+// Vertices
+float gunMagazine1[] = {gunBodyMain2[0] + gunMagazineOffset, gunBodyMain2[1],
+                        gunBodyMain2[2]}; // Top Left
+float gunMagazine2[] = {gunMagazine1[0], gunMagazine1[1] - gunMagazineHeight,
+                        gunMagazine1[2]}; // Bottom Left
+float gunMagazine3[] = {gunMagazine1[0] + gunMagazineLen, gunMagazine2[1],
+                        gunMagazine2[2]}; // Bottom Right
+float gunMagazine4[] = {gunMagazine1[0] + gunMagazineLen, gunMagazine1[1],
+                        gunMagazine1[2]}; // Top Right
+
+// ==========================================================================
+// 9. GUN BODY: stock
 // ==========================================================================
 
 //--- 1. Grip ---
@@ -273,7 +292,7 @@ float gunLowStock3[] = {gunStock3[0] + gunStock2Height, gunStock3[1],
 float gunLowStock4[] = {gunStock3[0], gunStock3[1], gunStock3[2]};
 
 // ==========================================================================
-// 9. GUN BODY: TOP HANDLE
+// 10. GUN BODY: TOP HANDLE
 // ==========================================================================
 // --- 1. REAR SPACER (Connector at the back) ---
 
@@ -317,7 +336,7 @@ float gunTopHandleSpacer8[] = {gunTopHandle3[0] + gunTopHandleSpacer2Length,
                                gunTopHandle3[1], gunTopHandle3[2]}; // Top Right
 
 // ==========================================================================
-// 10. REAR BLADE (Added)
+// 11. REAR BLADE (Added)
 // ==========================================================================
 
 // --- 1. Rear Blade Body ---
@@ -361,7 +380,8 @@ float rearSpikeEdge3[] = {rearSpikeEnd[0], rearSpikeEnd[1] + rearEdgeLen,
 void init() {
   glClearColor(0.25f, 0.25f, 0.30f,
                1.0f); // Dark blue-grey background for contrast
-  glEnable(GL_DEPTH_TEST); // Enable Z-buffer (so objects don't draw over each other)
+  glEnable(
+      GL_DEPTH_TEST); // Enable Z-buffer (so objects don't draw over each other)
   glEnable(GL_COLOR_MATERIAL); // Allow glColor to affect material properties
   glEnable(GL_NORMALIZE);      // Fix normal vectors after scaling
   glEnable(GLUT_MULTISAMPLE);
@@ -514,6 +534,9 @@ void display() {
 
   drawPollygon(gunBodyMain2, gunBodyMain3, gunBodyMain4, gunBodyMain1, thick);
 
+  // Magazine
+  drawPollygon(gunMagazine2, gunMagazine3, gunMagazine4, gunMagazine1, thick);
+
   // Segment 2
   drawPollygon(gunBodyMain6, gunBodyMain7, gunBodyMain8, gunBodyMain5, thick);
 
@@ -530,7 +553,6 @@ void display() {
   drawPollygon(gunGrip2, gunGrip3, gunGrip4, gunGrip1, thick);
 
   // stock
-  glColor3fv(colorGunMetal);
   drawPollygon(gunStock2, gunStock3, gunStock4, gunStock1, thick);
   // drawRoundedStock(gunStock1, gunStock2, gunStock3, gunStock4, thick);
 
@@ -538,7 +560,6 @@ void display() {
   drawPollygon(gunLowStock2, gunLowStock3, gunLowStock4, gunLowStock1, thick);
 
   // Handle Assembly
-  glColor3fv(colorGrip);
   drawPollygon(gunTopHandle3, thick, gunTopHandle2, thick, gunTopHandle1,
                thick - 0.1f, gunTopHandle4, thick - 0.1f, thick);
 
@@ -583,7 +604,6 @@ void display() {
   glPopMatrix();
   setGlow(false);
 
-  // --- DRAW ELECTRIC ARCS ALONG EDGES ---
   // --- DRAW ELECTRIC ARCS ALONG EDGES ---
   if (isCharging) {
 
