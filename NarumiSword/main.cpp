@@ -577,7 +577,7 @@ void display() {
                thick);
 
   // grip
-  glColor3fv(colorGrip);
+  glColor3fv(colorStock);
   drawPollygon(gunGrip2, gunGrip3, gunGrip4, gunGrip1, thick);
 
   // stock
@@ -589,7 +589,7 @@ void display() {
   drawPollygon(gunLowStock2, gunLowStock3, gunLowStock4, gunLowStock1, thick);
 
   // Restore Gun Metal for Handle Assembly
-  glColor3fv(colorGunMetal);
+  glColor3fv(colorStock);
 
   // Handle Assembly
   drawPollygon(gunTopHandle3, thick, gunTopHandle2, thick, gunTopHandle1,

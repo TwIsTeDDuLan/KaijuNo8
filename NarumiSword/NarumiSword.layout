@@ -2,26 +2,10 @@
 <CodeBlocks_layout_file>
 	<FileVersion major="1" minor="0" />
 	<ActiveTarget name="Release" />
-	<File name="main.cpp" open="1" top="1" tabpos="1" split="0" active="1" splitpos="953" zoom_1="-1" zoom_2="5">
-		<Cursor>
-			<Cursor1 position="2635" topLine="56" />
-		</Cursor>
-	</File>
 	<File name="animations.h" open="1" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
 			<Cursor1 position="914" topLine="1" />
 		</Cursor>
-	</File>
-	<File name="utils.h" open="1" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="804" topLine="0" />
-		</Cursor>
-		<Folding>
-			<Collapse line="2" />
-			<Collapse line="19" />
-			<Collapse line="44" />
-			<Collapse line="70" />
-		</Folding>
 	</File>
 	<File name="Draw.h" open="1" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
@@ -41,6 +25,31 @@
 			<Collapse line="326" />
 			<Collapse line="348" />
 			<Collapse line="393" />
+		</Folding>
+	</File>
+	<File name="main.cpp" open="1" top="1" tabpos="1" split="0" active="1" splitpos="953" zoom_1="-1" zoom_2="5">
+		<Cursor>
+			<Cursor1 position="24900" topLine="471" />
+		</Cursor>
+		<Folding>
+			<Collapse line="643" />
+			<Collapse line="708" />
+			<Collapse line="720" />
+			<Collapse line="738" />
+			<Collapse line="757" />
+			<Collapse line="806" />
+			<Collapse line="818" />
+		</Folding>
+	</File>
+	<File name="utils.h" open="1" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="804" topLine="0" />
+		</Cursor>
+		<Folding>
+			<Collapse line="2" />
+			<Collapse line="19" />
+			<Collapse line="44" />
+			<Collapse line="70" />
 		</Folding>
 	</File>
 </CodeBlocks_layout_file>
