@@ -246,7 +246,7 @@ float gunBodyMain12[] = {gunBodyMain9[0] + gunBodyMainLength1, gunBodyMain1[1],
 float gunTriggerHeight = 0.2f;
 float gunTriggerLen = -0.3f;
 float gunTrigger1[] = {gunBodyMain9[0], gunBodyMain9[1],
-                       gunBodyMain9[2]-0.05f}; // Top Left
+                       gunBodyMain9[2] - 0.05f}; // Top Left
 float gunTrigger2[] = {gunTrigger1[0], gunTrigger1[1] - gunTriggerHeight,
                        gunTrigger1[2]}; // Bottom Left
 float gunTrigger3[] = {gunTrigger1[0] + gunTriggerLen, gunTrigger2[1],
@@ -390,8 +390,8 @@ float rearSpikeEdge3[] = {rearSpikeEnd[0], rearSpikeEnd[1] + rearEdgeLen,
 // --- Initialization ---
 // Sets up OpenGL state, lighting, and materials
 void init() {
-  glClearColor(0.25f, 0.25f, 0.30f,
-               1.0f); // Dark blue-grey background for contrast
+  glClearColor(0.05f, 0.05f, 0.08f,
+               1.0f); // Deep Dark Navy/Black for contrast
   glEnable(
       GL_DEPTH_TEST); // Enable Z-buffer (so objects don't draw over each other)
   glEnable(GL_COLOR_MATERIAL); // Allow glColor to affect material properties
@@ -437,6 +437,8 @@ void display() {
   glColor3f(0.2f, 0.9f, 0.2f); // Default color (overwritten later)
 
   // --- 1. Draw Main Blade Parts ---
+  glPushMatrix(); // Start Main Blade Animation Group
+  glTranslatef(animMainBladeOffsetX, 0.0f, 0.0f);
 
   // Main Body
   glPushMatrix();
@@ -494,6 +496,7 @@ void display() {
            mainBlade2, bladeThickness);
   glPopMatrix();
   setGlow(false);
+  glPopMatrix(); // End Main Blade Animation Group
 
   // --- 3. Draw Barrel ---
   glColor3fv(colorBarrel);
@@ -547,12 +550,20 @@ void display() {
   drawPollygon(gunBodyMain2, gunBodyMain3, gunBodyMain4, gunBodyMain1, thick);
 
   // Magazine
+  glPushMatrix();
+  glTranslatef(0.0f, animMagOffsetY, 0.0f);
+  glColor3fv(colorMagazine); // Applied Magazine Color
   drawPollygon(gunMagazine2, gunMagazine3, gunMagazine4, gunMagazine1,
                thick - 0.1f);
+  glPopMatrix();
 
   // Trigger
+  glColor3fv(colorTrigger); // Applied Trigger Color
   drawPollygon(gunTrigger2, gunTrigger3, gunTrigger4, gunTrigger1,
                thick - 0.15f);
+
+  // Restore Gun Metal Color for rest of body
+  glColor3fv(colorGunMetal);
 
   // Segment 2
   drawPollygon(gunBodyMain6, gunBodyMain7, gunBodyMain8, gunBodyMain5, thick);
@@ -570,11 +581,15 @@ void display() {
   drawPollygon(gunGrip2, gunGrip3, gunGrip4, gunGrip1, thick);
 
   // stock
+  glColor3fv(colorStock); // Desert Tan Stock
   drawPollygon(gunStock2, gunStock3, gunStock4, gunStock1, thick);
   // drawRoundedStock(gunStock1, gunStock2, gunStock3, gunStock4, thick);
 
   // Lower stock
   drawPollygon(gunLowStock2, gunLowStock3, gunLowStock4, gunLowStock1, thick);
+
+  // Restore Gun Metal for Handle Assembly
+  glColor3fv(colorGunMetal);
 
   // Handle Assembly
   drawPollygon(gunTopHandle3, thick, gunTopHandle2, thick, gunTopHandle1,
@@ -589,6 +604,9 @@ void display() {
   glPopMatrix();
 
   // --- REAR BLADE ---
+  glPushMatrix(); // Start Rear Blade Animation Group
+  glTranslatef(animRearBladeOffsetX, animRearBladeOffsetY, 0.0f);
+
   // 1. Blade Body (Metallic)
   glPushMatrix();
   glColor3fv(colorSilver);
@@ -620,6 +638,7 @@ void display() {
 
   glPopMatrix();
   setGlow(false);
+  glPopMatrix(); // End Rear Blade Animation Group
 
   // --- DRAW ELECTRIC ARCS ALONG EDGES ---
   if (isCharging) {
@@ -753,9 +772,17 @@ void keyboard(unsigned char key, int x, int y) {
 
   case 'r':
   case 'R':
+    if (!isReloading && !isShooting) {
+      isReloading = true;
+      reloadTimer = 0.0f;
+    }
+    break;
+
+  case 'c':
+  case 'C':
     isCharging = !isCharging; // Toggle the effect
     if (isCharging) {
-      // Reset sparks when starting (only if you have sparks)
+      // Reset sparks when starting
       for (int i = 0; i < MAX_SPARKS; i++)
         spawnSpark(i);
     }

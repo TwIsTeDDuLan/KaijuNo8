@@ -120,7 +120,7 @@
 
 1768380125 c:\users\sudasun\desktop\cg-projects-group_15\narumisword\utils.h
 
-1768758802 source:e:\cs\sem 4\computer graphics\project\kaijuno8\narumisword\main.cpp
+1768802842 source:e:\cs\sem 4\computer graphics\project\kaijuno8\narumisword\main.cpp
 	"Draw.h"
 	"animations.h"
 	"utils.h"
@@ -130,7 +130,7 @@
 	<cstring>
 	<math.h>
 
-1768753353 e:\cs\sem 4\computer graphics\project\kaijuno8\narumisword\draw.h
+1768802830 e:\cs\sem 4\computer graphics\project\kaijuno8\narumisword\draw.h
 	<GL/glu.h>
 	<GL/glut.h>
 	<cstring>
@@ -138,7 +138,7 @@
 	<math.h>
 	<stdio.h>
 
-1768635495 e:\cs\sem 4\computer graphics\project\kaijuno8\narumisword\animations.h
+1768799989 e:\cs\sem 4\computer graphics\project\kaijuno8\narumisword\animations.h
 	<GL/glu.h>
 	<GL/glut.h>
 	<cmath>
@@ -147,7 +147,7 @@
 
 1768635495 e:\cs\sem 4\computer graphics\project\kaijuno8\narumisword\utils.h
 
-1768755666 source:e:\cs\sem 4\computer graphics\project\kaijuno8\narumisword\animations.cpp
+1768801065 source:e:\cs\sem 4\computer graphics\project\kaijuno8\narumisword\animations.cpp
 	"animations.h"
 	<iostream>
 	<cstdlib>

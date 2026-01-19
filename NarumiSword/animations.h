@@ -7,7 +7,6 @@
 #include <cstdlib>
 #include <vector>
 
-
 // --- Constants ---
 extern const float MAX_BALL_RADIUS;
 const int MAX_ELECTRONS = 50;
@@ -38,6 +37,14 @@ extern float shootTimer;
 
 extern Electron electrons[MAX_ELECTRONS];
 extern Spark sparks[MAX_SPARKS];
+
+// --- Reload Animation Globals ---
+extern bool isReloading;
+extern float reloadTimer;
+extern float animMainBladeOffsetX;
+extern float animRearBladeOffsetX;
+extern float animRearBladeOffsetY;
+extern float animMagOffsetY;
 
 // --- External Geometry References (Defined in main.cpp) ---
 extern float barrel[];

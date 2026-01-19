@@ -5,15 +5,17 @@
 #include <math.h>
 #include <stdio.h>
 
-
 // --- Color Definitions ---
 GLfloat colorGlow[] = {1.0f, 0.0f, 0.5f,
                        1.0f}; // Electric Pink (Narumi's Eye/Energy)
-//GLfloat colorSilver[] = {0.75f, 0.75f, 0.80f, 1.0f};   // Bright Steel/Silver
+// GLfloat colorSilver[] = {0.75f, 0.75f, 0.80f, 1.0f};   // Bright Steel/Silver
 GLfloat colorSilver[] = {0.2f, 0.2f, 0.2f, 1.0f};
 GLfloat colorGunMetal[] = {0.15f, 0.16f, 0.18f, 1.0f}; // Dark Blue-Grey
 GLfloat colorGrip[] = {0.05f, 0.05f, 0.05f, 1.0f};     // Almost Black
 GLfloat colorBarrel[] = {0.10f, 0.10f, 0.10f, 1.0f};   // Matte Black
+GLfloat colorMagazine[] = {0.25f, 0.26f, 0.28f, 1.0f}; // Lighter GunMetal
+GLfloat colorTrigger[] = {0.6f, 0.6f, 0.65f, 1.0f};    // Metallic Silver/Grey
+GLfloat colorStock[] = {0.76f, 0.60f, 0.42f, 1.0f};    // Desert Combat Tan
 
 GLfloat noEmission[] = {0.0f, 0.0f, 0.0f, 1.0f}; // Reset emission
 

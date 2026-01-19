@@ -5,7 +5,6 @@
 #include <math.h>
 #include <vector>
 
-
 // --- Global Variable Definitions ---
 bool isCharging = false;
 float chargeTimer = 0.0f;
@@ -17,6 +16,14 @@ float shootTimer = 0.0f;
 
 struct Spark sparks[MAX_SPARKS];
 struct Electron electrons[MAX_ELECTRONS];
+
+// --- Reload Animation State ---
+bool isReloading = false;
+float reloadTimer = 0.0f;
+float animMainBladeOffsetX = 0.0f;
+float animRearBladeOffsetX = 0.0f;
+float animRearBladeOffsetY = 0.0f;
+float animMagOffsetY = 0.0f;
 
 // --- Helper to spawn a new spark ---
 void spawnSpark(int i) {
@@ -160,6 +167,70 @@ void update(int value) {
       if (ballRadius < 0.0f)
         ballRadius = 0.0f;
     }
+  }
+
+  // --- Reload Animation Logic ---
+  if (isReloading) {
+    reloadTimer += 0.05f; // Speed of animation
+
+    // Animation Duration: ~1.5 seconds (0.0 to 1.5)
+    float totalDuration = 1.5f;
+    float peakTime = totalDuration / 2.0f; // 0.75
+
+    // Normalized progress 0.0 to 1.0 (Retract) then 1.0 to 0.0 (Extend)
+    float progress = 0.0f;
+
+    if (reloadTimer < peakTime) {
+      // Phase 1: Retracting (0.0 -> 1.0)
+      progress = reloadTimer / peakTime;
+      // Smooth step
+      progress = progress * progress * (3.0f - 2.0f * progress);
+    } else if (reloadTimer < totalDuration) {
+      // Phase 2: Extending (1.0 -> 0.0)
+      progress = 1.0f - ((reloadTimer - peakTime) / peakTime);
+      progress = progress * progress * (3.0f - 2.0f * progress);
+    } else {
+      // End
+      isReloading = false;
+      reloadTimer = 0.0f;
+      progress = 0.0f;
+    }
+
+    // --- Apply Offsets based on Progress (0.0=Idle, 1.0=Full Retract/Drop) ---
+
+    // 1. Main Blade: Moves Forward along X (Retracts into gun body? Or extends
+    // out?) Request: "retract and extend the main blade(along the gun barrel)"
+    // Typically retract means pulling back. But the blade is at the front.
+    // Let's assume Retract = Move X positive (Backwards into gun).
+    // Main Blade is at negative X. So moving +X moves it towards origin (Gun
+    // Body).
+    animMainBladeOffsetX = progress * 0.5f;
+
+    // 2. Secondary Blade (Rear): Along gun stock.
+    // Determine direction. Stock is at positive X.
+    // Move -X to retract forward into gun? Or +X to slide back?
+    // Let's try sliding it backwards (+X) or forwards (-X).
+    // Let's do -X (slide 'in' towards connection point).
+    // Wait, rear blade is at the very back.
+    // Let's make it slide OUT (-X towards body) then IN (+X).
+    animRearBladeOffsetX = progress * 0.5f;
+    animRearBladeOffsetY =
+        progress * 0.5f; // Also move up/down slightly? Maybe just X.
+    // Let's stick to X for "along gun stock".
+    // Actually, let's do a cool "open up" move.
+    // Slide backwards (+X)
+    animRearBladeOffsetX = progress * -0.8f;
+    animRearBladeOffsetY = 0.0f;
+
+    // 3. Magazine: Extend (Drop down -Y)
+    animMagOffsetY = progress * -1.0f; // Drop down 1.0 unit
+
+  } else {
+    // Reset to ensure 0
+    animMainBladeOffsetX = 0.0f;
+    animRearBladeOffsetX = 0.0f;
+    animRearBladeOffsetY = 0.0f;
+    animMagOffsetY = 0.0f;
   }
 
   // Handle Shooting Timer
