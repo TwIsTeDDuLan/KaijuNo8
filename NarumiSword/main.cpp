@@ -62,6 +62,8 @@ float rearEdgeLen = 0.2f;
 float gunMagazineHeight = 0.4f;
 float gunMagazineLen = gunBodyMainLength2 * 0.5f;
 float gunMagazineOffset = gunBodyMainLength2 * 0.125f;
+float gunMagazineBaseHeight = 0.15f;  // New Base Height
+float gunMagazineBaseOverhang = 0.1f; // New Base Overhang
 
 float gunBodyHandleLength = 2.0f;
 float gunBodyHandleHeight = 0.2f;
@@ -553,8 +555,65 @@ void display() {
   glPushMatrix();
   glTranslatef(0.0f, animMagOffsetY, 0.0f);
   glColor3fv(colorMagazine); // Applied Magazine Color
+  float magThick = thick - 0.1f;
   drawPollygon(gunMagazine2, gunMagazine3, gunMagazine4, gunMagazine1,
-               thick - 0.1f);
+               magThick);
+
+  // --- Magazine Base ---
+  // Coordinates relative to the bottom of the magazine
+  // mag2 is bottom left, mag3 is bottom right
+  float magBaseTopLeft[] = {gunMagazine2[0] - gunMagazineBaseOverhang,
+                            gunMagazine2[1], gunMagazine2[2]};
+  float magBaseTopRight[] = {gunMagazine3[0] + gunMagazineBaseOverhang,
+                             gunMagazine3[1], gunMagazine3[2]};
+  float magBaseBottomRight[] = {magBaseTopRight[0],
+                                magBaseTopRight[1] - gunMagazineBaseHeight,
+                                magBaseTopRight[2]};
+  float magBaseBottomLeft[] = {magBaseTopLeft[0],
+                               magBaseTopLeft[1] - gunMagazineBaseHeight,
+                               magBaseTopLeft[2]};
+
+  GLfloat colorMagBase[] = {0.1f, 0.1f, 0.12f, 1.0f}; // Darker base color
+  glColor3fv(colorMagBase);
+  drawPollygon(magBaseBottomLeft, magBaseBottomRight, magBaseTopRight,
+               magBaseTopLeft, magThick);
+
+  // --- Bullet Strips ---
+  // Glowing strips on the side
+  setGlow(true);
+  float stripH = 0.05f;
+  float stripGap = 0.05f;
+  float stripW = gunMagazineLen * 0.7f;
+  float stripX = gunMagazine2[0] + (gunMagazineLen - stripW) / 2.0f;
+  float startY = gunMagazine1[1] - 0.1f;
+  float frontZ = gunMagazine1[2] + 0.005f;
+  float backZ = gunMagazine1[2] - magThick - 0.005f;
+
+  for (int i = 0; i < 3; i++) {
+    float y = startY - i * (stripH + stripGap);
+    if (y < gunMagazine2[1])
+      break;
+
+    // Front Face Strip
+    glBegin(GL_QUADS);
+    glNormal3f(0.0f, 0.0f, 1.0f);
+    glVertex3f(stripX, y - stripH, frontZ);
+    glVertex3f(stripX + stripW, y - stripH, frontZ);
+    glVertex3f(stripX + stripW, y, frontZ);
+    glVertex3f(stripX, y, frontZ);
+    glEnd();
+
+    // Back Face Strip
+    glBegin(GL_QUADS);
+    glNormal3f(0.0f, 0.0f, -1.0f);
+    glVertex3f(stripX, y, backZ);
+    glVertex3f(stripX + stripW, y, backZ);
+    glVertex3f(stripX + stripW, y - stripH, backZ);
+    glVertex3f(stripX, y - stripH, backZ);
+    glEnd();
+  }
+  setGlow(false);
+
   glPopMatrix();
 
   // Trigger
