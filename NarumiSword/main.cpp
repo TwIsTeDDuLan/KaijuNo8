@@ -59,6 +59,10 @@ float rearBladeZ = 0.1f;
 float rearBladeHeight = -0.1f;
 float rearEdgeLen = 0.2f;
 
+float gunMagazineHeight = 0.4f;
+float gunMagazineLen = gunBodyMainLength2 * 0.5f;
+float gunMagazineOffset = gunBodyMainLength2 * 0.125f;
+
 float gunBodyHandleLength = 2.0f;
 float gunBodyHandleHeight = 0.2f;
 float gunTopHandleHeight = 0.2f;
@@ -213,7 +217,8 @@ float gunBodyMainThickness = backCoverZ - frontCoverZ;
 float gunBodyMain1[] = {gunBodyBarrelCover3[0], gunBodyBarrelCover3[1],
                         gunBodyBarrelCover3[2]};
 float gunBodyMain2[] = {gunBodyBarrelCover3[0],
-                        gunBodyBarrelCover3[1] - gunBodyMainHeight + 0.4f,
+                        gunBodyBarrelCover3[1] - gunBodyMainHeight +
+                            gunMagazineHeight,
                         gunBodyBarrelCover3[2]};
 float gunBodyMain3[] = {gunBodyMain2[0] + gunBodyMainLength2, gunBodyMain2[1],
                         gunBodyMain2[2]};
@@ -237,6 +242,18 @@ float gunBodyMain11[] = {gunBodyMain7[0] + gunBodyMainLength1, gunBodyMain7[1],
 float gunBodyMain12[] = {gunBodyMain9[0] + gunBodyMainLength1, gunBodyMain1[1],
                          gunBodyMain9[2]};
 
+// --- Trigger ---
+float gunTriggerHeight = 0.2f;
+float gunTriggerLen = -0.3f;
+float gunTrigger1[] = {gunBodyMain9[0], gunBodyMain9[1],
+                       gunBodyMain9[2]-0.05f}; // Top Left
+float gunTrigger2[] = {gunTrigger1[0], gunTrigger1[1] - gunTriggerHeight,
+                       gunTrigger1[2]}; // Bottom Left
+float gunTrigger3[] = {gunTrigger1[0] + gunTriggerLen, gunTrigger2[1],
+                       gunTrigger2[2]}; // Bottom Right
+float gunTrigger4[] = {gunTrigger1[0] + gunTriggerLen, gunTrigger1[1],
+                       gunTrigger1[2]}; // Top Right
+
 // --- Part Four (Upper Connector) ---
 float gunBodyMain13[] = {gunBodyBarrelCover4[0], gunBodyBarrelCover4[1],
                          gunBodyMain9[2]};
@@ -247,17 +264,12 @@ float gunBodyMain16[] = {gunBodyMain12[0], gunBodyBarrelCover4[1],
                          gunBodyMain9[2]};
 
 // ==========================================================================
-// 8. GUN BODY: MAGZINE (Added)
+// 8. GUN BODY: MAGZINE
 // ==========================================================================
-// Connects to the bottom of Part One (gunBodyMain2 to gunBodyMain3)
-// Length is 6/8 of that segment.
-float gunMagazineHeight = 0.4f;
-float gunMagazineLen = gunBodyMainLength2 * 0.75f;     // 6/8
-float gunMagazineOffset = gunBodyMainLength2 * 0.125f; // Center it (1/8 offset)
 
 // Vertices
 float gunMagazine1[] = {gunBodyMain2[0] + gunMagazineOffset, gunBodyMain2[1],
-                        gunBodyMain2[2]}; // Top Left
+                        gunBodyMain2[2] - 0.05f}; // Top Left
 float gunMagazine2[] = {gunMagazine1[0], gunMagazine1[1] - gunMagazineHeight,
                         gunMagazine1[2]}; // Bottom Left
 float gunMagazine3[] = {gunMagazine1[0] + gunMagazineLen, gunMagazine2[1],
@@ -535,7 +547,12 @@ void display() {
   drawPollygon(gunBodyMain2, gunBodyMain3, gunBodyMain4, gunBodyMain1, thick);
 
   // Magazine
-  drawPollygon(gunMagazine2, gunMagazine3, gunMagazine4, gunMagazine1, thick);
+  drawPollygon(gunMagazine2, gunMagazine3, gunMagazine4, gunMagazine1,
+               thick - 0.1f);
+
+  // Trigger
+  drawPollygon(gunTrigger2, gunTrigger3, gunTrigger4, gunTrigger1,
+               thick - 0.15f);
 
   // Segment 2
   drawPollygon(gunBodyMain6, gunBodyMain7, gunBodyMain8, gunBodyMain5, thick);
